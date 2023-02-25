@@ -1,4 +1,5 @@
 import socket
+import numpy as np
 
 # create a socket object
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -18,12 +19,11 @@ print("Waiting for a client to connect...")
 client_socket, client_address = server_socket.accept()
 print("Client connected: " + str(client_address))
 
-# receive message from client and convert to uppercase
-message = client_socket.recv(1024).decode()
-modified_message = message.upper()
-
-# send the modified message back to the client
-client_socket.send(modified_message.encode())
+# receive array from client, add 1 to every element, and send back to client
+arr_bytes = client_socket.recv(1024)
+arr = np.frombuffer(arr_bytes, dtype=np.int32)
+modified_arr = arr + 1
+client_socket.send(modified_arr.tobytes())
 
 # close the sockets
 client_socket.close()
