@@ -5,7 +5,7 @@ import numpy as np
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # get local machine name and port number
-host = socket.gethostname()
+host = "174.129.92.182"
 port = 9999
 
 # connect to the server
